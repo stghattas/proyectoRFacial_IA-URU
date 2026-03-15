@@ -72,3 +72,8 @@ class DatabaseManager:
             (persona_id, emocion, confianza, fecha_actual)
         )
         self.conn.commit()
+
+    def obtener_estadisticas_emociones(self):
+        """Devuelve un conteo de cuántas veces se ha detectado cada emoción."""
+        self.cursor.execute("SELECT emocion, COUNT(*) FROM detecciones GROUP BY emocion")
+        return self.cursor.fetchall()
