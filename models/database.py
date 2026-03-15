@@ -51,8 +51,8 @@ class DatabaseManager:
             return False, f"Error inesperado: {str(e)}"
 
     def obtener_todas_las_personas(self):
-        """Devuelve una lista de diccionarios con los datos y embeddings cargados como numpy arrays."""
-        self.cursor.execute("SELECT id, nombre, apellido, embedding FROM personas")
+        """Devuelve una lista de diccionarios con los datos y embeddings."""
+        self.cursor.execute("SELECT id, nombre, apellido, email, embedding FROM personas")
         filas = self.cursor.fetchall()
         personas = []
         for fila in filas:
@@ -60,7 +60,8 @@ class DatabaseManager:
                 "id": fila[0],
                 "nombre": fila[1],
                 "apellido": fila[2],
-                "embedding": np.array(json.loads(fila[3]))
+                "email": fila[3],
+                "embedding": np.array(json.loads(fila[4]))
             })
         return personas
 
@@ -77,3 +78,15 @@ class DatabaseManager:
         """Devuelve un conteo de cuántas veces se ha detectado cada emoción."""
         self.cursor.execute("SELECT emocion, COUNT(*) FROM detecciones GROUP BY emocion")
         return self.cursor.fetchall()
+    
+    def eliminar_persona(self, id_persona):
+        """Elimina a una persona y su historial de detecciones."""
+        try:
+            # Primero eliminamos el historial por la llave foránea
+            self.cursor.execute("DELETE FROM detecciones WHERE persona_id = ?", (id_persona,))
+            # Luego eliminamos a la persona
+            self.cursor.execute("DELETE FROM personas WHERE id = ?", (id_persona,))
+            self.conn.commit()
+            return True, "Registro eliminado correctamente."
+        except Exception as e:
+            return False, f"Error al eliminar: {str(e)}"

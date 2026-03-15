@@ -6,10 +6,20 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Base de datos local SQLite (Opcional, pero recomendado)
-sistema_facial.db
-*.sqlite3
-
 # Archivos del sistema operativo
 .DS_Store
 Thumbs.db
+
+# ==========================================
+# Datos Sensibles y Privacidad (NO SUBIR)
+# ==========================================
+
+# Base de datos local (Contiene correos, nombres y biometría)
+sistema_facial.db
+*.sqlite3
+
+# Carpeta de fotografías físicas de los usuarios registradas
+rostros/
+*.jpg
+*.jpeg
+*.png

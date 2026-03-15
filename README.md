@@ -1,1 +1,1 @@
-# proyectoRFacial_IA-URU
+.\env_facial\Scripts\activate

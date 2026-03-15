@@ -1,4 +1,5 @@
 import cv2
+import os
 from tkinter import messagebox
 
 class RegistroController:
@@ -6,51 +7,44 @@ class RegistroController:
         self.view = view
         self.db = db
         self.ai = ai
-
-        # Conectar el botón de la vista con el método de este controlador
         self.view.asignar_comando_registro(self.procesar_registro)
 
+        # Crear carpeta para guardar las fotos si no existe
+        os.makedirs("rostros", exist_ok=True)
+
     def procesar_registro(self):
-        # 1. Obtener datos de la vista
         datos = self.view.obtener_datos()
-        
         if not all(datos.values()):
-            messagebox.showwarning("Campos incompletos", "Por favor, llene todos los campos.")
+            messagebox.showwarning("Incompleto", "Llene todos los campos.")
             return
 
-        # 2. Capturar 1 frame de la cámara
         cap = cv2.VideoCapture(0)
         ret, frame = cap.read()
         cap.release()
 
         if not ret:
-            messagebox.showerror("Error de Cámara", "No se pudo acceder a la cámara web.")
+            messagebox.showerror("Error", "No se pudo acceder a la cámara.")
             return
 
-        # 3. Procesar con Inteligencia Artificial
         embedding = self.ai.extraer_embedding(frame)
         if embedding is None:
-            messagebox.showerror("Error", "No se detectó ningún rostro. Asegúrese de estar bien iluminado.")
+            messagebox.showerror("Error", "No se detectó ningún rostro.")
             return
         
-        # 4. Verificar duplicados (Buscar en la BD si el rostro ya existe)
         personas_db = self.db.obtener_todas_las_personas()
         duplicado = self.ai.buscar_persona(embedding, personas_db)
         
         if duplicado:
-             messagebox.showerror("Error", f"Esta persona ya está registrada como: {duplicado['nombre']} {duplicado['apellido']}")
+             messagebox.showerror("Error", f"Ya registrada como: {duplicado['nombre']}")
              return
 
-        # 5. Guardar en Base de Datos
-        exito, msj = self.db.registrar_persona(
-            datos['nombre'], 
-            datos['apellido'], 
-            datos['email'], 
-            embedding
-        )
+        exito, msj = self.db.registrar_persona(datos['nombre'], datos['apellido'], datos['email'], embedding)
         
-        # 6. Actualizar Vista según el resultado
         if exito:
+            # GUARDAR LA FOTO USANDO EL EMAIL COMO NOMBRE DE ARCHIVO
+            ruta_foto = os.path.join("rostros", f"{datos['email']}.jpg")
+            cv2.imwrite(ruta_foto, frame)
+            
             messagebox.showinfo("Éxito", msj)
             self.view.limpiar_formulario()
         else:
