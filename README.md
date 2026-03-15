@@ -1,8 +1,8 @@
-🎭 Sistema de Reconocimiento Facial y Análisis de Emociones <br>
+# 🎭 Sistema de Reconocimiento Facial y Análisis de Emociones <br>
 
 Este proyecto es un sistema integral desarrollado para la materia de Inteligencia Artificial. Utiliza técnicas de Visión Artificial y Redes Neuronales Profundas para identificar personas registradas y analizar su estado emocional en tiempo real.
 
-🚀 Características Principales <br>
+## 🚀 Características Principales <br>
 
 - Registro Biométrico: Captura y almacenamiento de embeddings faciales (vectores matemáticos) mediante el modelo Facenet.
 
@@ -16,7 +16,7 @@ Este proyecto es un sistema integral desarrollado para la materia de Inteligenci
 
 - Arquitectura Modular: Separación estricta de responsabilidades (Modelos, Vistas y Controladores).
 
-🛠️ Tecnologías Utilizadas <br>
+## 🛠️ Tecnologías Utilizadas <br>
 
 Lenguaje: Python 3.10.11
 
@@ -28,7 +28,7 @@ Base de Datos: SQLite3 (Persistencia local).
 
 Gráficos: Matplotlib.
 
-📦 Instalación y Configuración <br>
+## 📦 Instalación y Configuración <br>
 
 Sigue estos pasos para replicar el entorno de desarrollo:
 
@@ -52,7 +52,7 @@ Es crucial utilizar Python 3.10 para asegurar la compatibilidad con TensorFlow: 
 
 `pip install tf-keras` <br>
 
-📂 Estructura del Proyecto <br>
+## 📂 Estructura del Proyecto <br>
 ├── models/         # Lógica de IA (DeepFace) y Base de Datos (SQLite) <br>
 ├── views/          # Componentes de la Interfaz Gráfica (Tkinter) <br>
 ├── controllers/    # Orquestadores que unen la lógica con la vista <br>
@@ -61,14 +61,14 @@ Es crucial utilizar Python 3.10 para asegurar la compatibilidad con TensorFlow: 
 ├── config.py       # Configuraciones globales y umbrales <br>
 └── main.py         # Punto de entrada de la aplicación <br>
 
-🔒 Privacidad y Seguridad
+## 🔒 Privacidad y Seguridad
 Este proyecto implementa buenas prácticas de seguridad de datos biométricos:
 
 Exclusión de Datos: El archivo .gitignore está configurado para no subir la base de datos (.db) ni las fotografías físicas (rostros/) al repositorio público.
 
 Spoiler de Rostro: En el panel de gestión, las imágenes están ocultas por defecto para proteger la privacidad visual del usuario.
 
-📝 Uso
+## 📝 Uso
 Ejecuta el sistema con python main.py.
 
 En la pestaña Registro, ingresa tus datos y captura tu rostro.
@@ -79,4 +79,4 @@ Consulta la pestaña Reportes para ver las estadísticas de uso.
 
 Hecho por: <br>
 
-⭐ Samer Ghattas - Estudiante de Ingeniería en Computación.
+### ⭐ Samer Ghattas - Estudiante de Ingeniería en Computación.
