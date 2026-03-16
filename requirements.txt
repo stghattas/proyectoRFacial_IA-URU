@@ -1,6 +1,0 @@
-opencv-python
-deepface
-numpy
-pandas
-matplotlib
-Pillow
